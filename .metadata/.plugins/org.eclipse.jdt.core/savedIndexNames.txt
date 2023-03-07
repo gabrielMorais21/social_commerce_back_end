@@ -1,0 +1,4 @@
+INDEX VERSION 1.131+C:\Users\gabri\OneDrive\Área de Trabalho\cleanarch\.metadata\.plugins\org.eclipse.jdt.core
+1584979428.index
+1199214050.index
+1865797976.index
