@@ -2,10 +2,11 @@ package com.morais.cleanarch.core.domain;
 
 public class Customer {
 
-    public Customer(){
+    public Customer() {
         this.isValidCpf = false;
     }
-    public Customer(String id, String name, String cpf, Address address, boolean isValidCpf) {
+
+    public Customer(String id, String name, String cpf, Address address, Boolean isValidCpf) {
         this.id = id;
         this.name = name;
         this.cpf = cpf;
@@ -13,11 +14,16 @@ public class Customer {
         this.isValidCpf = isValidCpf;
     }
 
-    private  String id;
+    private String id;
+
     private String name;
+
     private String cpf;
+
     private Address address;
-    private boolean isValidCpf;
+
+    private Boolean isValidCpf;
+
 
     public String getId() {
         return id;
@@ -51,11 +57,11 @@ public class Customer {
         this.address = address;
     }
 
-    public boolean isValidCpf() {
+    public Boolean getIsValidCpf() {
         return isValidCpf;
     }
 
-    public void setValidCpf(boolean validCpf) {
-        isValidCpf = validCpf;
+    public void setIsValidCpf(Boolean isValidCpf) {
+        this.isValidCpf = isValidCpf;
     }
 }
