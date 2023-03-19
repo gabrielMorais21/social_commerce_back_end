@@ -22,5 +22,8 @@ public class CustomerRequest {
     @NotBlank
     private String cpf;
 
+    @NotBlank
+    private String password;
+
     private AddressRequest address;
 }

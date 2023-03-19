@@ -30,6 +30,9 @@ public class CustomerEntity {
     @Column(name = "email")
     private String  email;
 
+    @Column(name = "password")
+    private String  password;
+
     @Column(name = "rg")
     private String rg;
 

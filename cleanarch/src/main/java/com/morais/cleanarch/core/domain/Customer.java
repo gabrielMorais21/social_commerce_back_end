@@ -20,9 +20,13 @@ public class Customer {
 
     private Address address;
 
+    private  String password;
+
+
+
     public Customer(){}
 
-    public Customer(String id, String name, String lastName, String email, String rg, String cellPhone, String landlinePhone, String cpf, Address address) {
+    public Customer(String id, String name, String lastName, String email, String rg, String cellPhone, String landlinePhone, String cpf, Address address, String password) {
         this.id = id;
         this.name = name;
         this.lastName = lastName;
@@ -32,6 +36,7 @@ public class Customer {
         this.landlinePhone = landlinePhone;
         this.cpf = cpf;
         this.address = address;
+        this.password = password;
     }
 
     public String getId() {
@@ -104,6 +109,14 @@ public class Customer {
 
     public void setAddress(Address address) {
         this.address = address;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }
 

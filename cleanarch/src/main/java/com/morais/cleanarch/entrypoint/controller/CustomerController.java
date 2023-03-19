@@ -9,6 +9,7 @@ import com.morais.cleanarch.entrypoint.controller.request.CustomerRequest;
 import com.morais.cleanarch.entrypoint.controller.response.CustomerResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -26,13 +27,15 @@ public class CustomerController {
     @Autowired
     private UpdateCustomerUseCase updateCustomerUseCase;
 
+    @Autowired
+    private PasswordEncoder encoder;
 
     @Autowired
     private CustomerMapper customerMapper;
     @PostMapping
     public ResponseEntity<Void> insert(@Valid @RequestBody CustomerRequest customerRequest) {
         Customer customer = customerMapper.toCustomer(customerRequest);
-        System.out.println(customer);
+        customer.setPassword(encoder.encode(customer.getPassword()));
         insertCustomerUseCase.insert(customer);
         return ResponseEntity.ok().build();
     }
