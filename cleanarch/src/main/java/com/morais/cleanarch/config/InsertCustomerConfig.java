@@ -1,9 +1,7 @@
 package com.morais.cleanarch.config;
 
-import com.morais.cleanarch.core.usecase.impl.InsertCustomerUseCaseImpl;
-import com.morais.cleanarch.dataprovider.FindAddressByZipCodeImpl;
-import com.morais.cleanarch.dataprovider.InsertCustomerImpl;
-import com.morais.cleanarch.dataprovider.SendCpfForValidationImpl;
+import com.morais.cleanarch.core.usecase.customer.impl.InsertCustomerUseCaseImpl;
+import com.morais.cleanarch.dataprovider.customer.impl.InsertCustomerImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -12,11 +10,10 @@ public class InsertCustomerConfig {
 
     @Bean
     public InsertCustomerUseCaseImpl insertCustomerUseCase(
-            FindAddressByZipCodeImpl findAddressByZipCode,
-            InsertCustomerImpl insertCustomer,
-            SendCpfForValidationImpl sendCpfForValidation
+            InsertCustomerImpl insertCustomer
+
     ) {
-        return new InsertCustomerUseCaseImpl(findAddressByZipCode, insertCustomer, sendCpfForValidation);
+        return new InsertCustomerUseCaseImpl(insertCustomer );
     }
 
 }

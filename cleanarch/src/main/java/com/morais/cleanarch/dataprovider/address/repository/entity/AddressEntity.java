@@ -1,24 +1,36 @@
-package com.morais.cleanarch.core.domain;
+package com.morais.cleanarch.dataprovider.address.repository.entity;
 
-public class Address {
+import com.morais.cleanarch.core.domain.Customer;
+import com.morais.cleanarch.dataprovider.customer.repository.entity.CustomerEntity;
+import lombok.*;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "addresses")
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@EqualsAndHashCode
+@ToString
+public class AddressEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
+
+    @Column(name = "street")
     private  String street;
+
+    @Column(name = "city")
     private String city;
 
+    @Column(name = "uf")
     private  String uf;
 
+    @Column(name = "zipCode")
     private  String zipCode;
-
-    public Address(){}
-
-    public Address(String id, String street, String city, String uf, String zipCode) {
-        this.id = id;
-        this.street = street;
-        this.city = city;
-        this.uf = uf;
-        this.zipCode = zipCode;
-    }
 
     public String getId() {
         return id;
@@ -59,4 +71,5 @@ public class Address {
     public void setZipCode(String zipCode) {
         this.zipCode = zipCode;
     }
+    
 }

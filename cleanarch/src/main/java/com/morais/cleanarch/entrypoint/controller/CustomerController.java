@@ -1,9 +1,9 @@
 package com.morais.cleanarch.entrypoint.controller;
 
 import com.morais.cleanarch.core.domain.Customer;
-import com.morais.cleanarch.core.usecase.FindCustomerByIdUseCase;
-import com.morais.cleanarch.core.usecase.InsertCustomerUseCase;
-import com.morais.cleanarch.core.usecase.UpdateCustomerUseCase;
+import com.morais.cleanarch.core.usecase.customer.FindCustomerByIdUseCase;
+import com.morais.cleanarch.core.usecase.customer.InsertCustomerUseCase;
+import com.morais.cleanarch.core.usecase.customer.UpdateCustomerUseCase;
 import com.morais.cleanarch.entrypoint.controller.mapper.CustomerMapper;
 import com.morais.cleanarch.entrypoint.controller.request.CustomerRequest;
 import com.morais.cleanarch.entrypoint.controller.response.CustomerResponse;
@@ -32,9 +32,11 @@ public class CustomerController {
     @PostMapping
     public ResponseEntity<Void> insert(@Valid @RequestBody CustomerRequest customerRequest) {
         Customer customer = customerMapper.toCustomer(customerRequest);
-        insertCustomerUseCase.insert(customer, customerRequest.getZipCode());
+        System.out.println(customer);
+        insertCustomerUseCase.insert(customer);
         return ResponseEntity.ok().build();
     }
+
 
     @GetMapping("/{id}")
     public ResponseEntity<CustomerResponse> findById(@PathVariable final String id) {
@@ -48,7 +50,7 @@ public class CustomerController {
     public  ResponseEntity<Void> update(@PathVariable final String id, @Valid @RequestBody CustomerRequest customerRequest){
         var customer = customerMapper.toCustomer(customerRequest);
         customer.setId(id);
-        updateCustomerUseCase.update(customer, customerRequest.getZipCode());
+        updateCustomerUseCase.update(customer);
         return ResponseEntity.noContent().build();
     }
 }

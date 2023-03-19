@@ -1,38 +1,46 @@
-package com.morais.cleanarch.core.domain;
+package com.morais.cleanarch.dataprovider.customer.repository.entity;
 
-public class Customer {
+import com.morais.cleanarch.dataprovider.address.repository.entity.AddressEntity;
+import lombok.*;
 
+import javax.persistence.*;
+import javax.validation.constraints.Email;
+
+@Entity
+@Table(name = "customers")
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@EqualsAndHashCode
+@ToString
+public class CustomerEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
 
+    @Column(name = "name")
     private String name;
 
+    @Column(name = "last_name")
     private String lastName;
 
-    private String email;
+    @Email
+    @Column(name = "email")
+    private String  email;
 
+    @Column(name = "rg")
     private String rg;
 
+    @Column(name = "cell_phone")
     private String cellPhone;
 
+    @Column(name = "landline_phone")
     private String landlinePhone;
 
+    @Column(name = "cpf")
     private String cpf;
-
-    private Address address;
-
-    public Customer(){}
-
-    public Customer(String id, String name, String lastName, String email, String rg, String cellPhone, String landlinePhone, String cpf, Address address) {
-        this.id = id;
-        this.name = name;
-        this.lastName = lastName;
-        this.email = email;
-        this.rg = rg;
-        this.cellPhone = cellPhone;
-        this.landlinePhone = landlinePhone;
-        this.cpf = cpf;
-        this.address = address;
-    }
 
     public String getId() {
         return id;
@@ -98,13 +106,15 @@ public class Customer {
         this.cpf = cpf;
     }
 
-    public Address getAddress() {
+    public AddressEntity getAddress() {
         return address;
     }
 
-    public void setAddress(Address address) {
+    public void setAddress(AddressEntity address) {
         this.address = address;
     }
+
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "address_id", referencedColumnName = "id", nullable = false)
+    private AddressEntity address;
 }
-
-
