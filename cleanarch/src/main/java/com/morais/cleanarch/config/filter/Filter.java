@@ -17,6 +17,8 @@ public class Filter {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and().authorizeHttpRequests().antMatchers(HttpMethod.POST, "/api/v1/customers/login").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/v1/customers").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/v1/products").permitAll()
+                .antMatchers(HttpMethod.GET, "/api/v1/products").permitAll()
                 .anyRequest().authenticated().and().build();
     }
 }
