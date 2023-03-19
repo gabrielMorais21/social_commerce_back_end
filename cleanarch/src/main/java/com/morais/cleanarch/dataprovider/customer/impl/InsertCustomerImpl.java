@@ -18,7 +18,6 @@ public class InsertCustomerImpl implements InsertCustomer {
 
     @Override
     public void insert(Customer customer) {
-        System.out.println(customer.toString());
         var customerEntity = customerEntityMapper.toCustomerEntity(customer);
         customerRepository.save(customerEntity);
     }

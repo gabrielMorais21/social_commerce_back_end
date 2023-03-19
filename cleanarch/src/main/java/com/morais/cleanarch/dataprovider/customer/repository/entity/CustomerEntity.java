@@ -7,7 +7,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 
 @Entity
-@Table(name = "customers")
+@Table(name = "tbl_customers")
 @Getter
 @Setter
 @AllArgsConstructor

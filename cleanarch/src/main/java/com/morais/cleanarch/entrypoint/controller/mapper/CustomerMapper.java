@@ -11,7 +11,6 @@ import java.util.Optional;
 
 @Mapper(componentModel = "spring")
 public interface CustomerMapper {
-//    @Mapping(target = "id", ignore = true)
     Customer toCustomer(CustomerRequest customerRequest);
 
     CustomerResponse toCustomerResponse(Customer customer);

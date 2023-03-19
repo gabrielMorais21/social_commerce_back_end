@@ -1,4 +1,4 @@
-package com.morais.cleanarch.config;
+package com.morais.cleanarch.config.customer;
 
 import com.morais.cleanarch.core.usecase.customer.impl.FindCustomerByIdUseCaseImpl;
 import com.morais.cleanarch.dataprovider.customer.impl.FindCustomerByIdImpl;
