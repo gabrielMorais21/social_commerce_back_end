@@ -1,6 +1,6 @@
 package com.morais.cleanarch.config.customer;
 
-import com.morais.cleanarch.core.usecase.customer.impl.FindCustomerByIdUseCaseImpl;
+import com.morais.cleanarch.core.usecase.customer.impl.FindCustomerByEmailUseCaseImpl;
 import com.morais.cleanarch.core.usecase.customer.impl.UpdateCustomerUseCaseImpl;
 import com.morais.cleanarch.dataprovider.customer.impl.UpdateCustomerImpl;
 import org.springframework.context.annotation.Bean;
@@ -11,7 +11,7 @@ public class UpdateCustomerConfig {
 
     @Bean
     public UpdateCustomerUseCaseImpl updateCustomerUseCase(
-            FindCustomerByIdUseCaseImpl findCustomerByIdUseCase,
+            FindCustomerByEmailUseCaseImpl findCustomerByIdUseCase,
 
             UpdateCustomerImpl updateCustomer
 

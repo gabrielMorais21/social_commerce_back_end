@@ -1,18 +1,26 @@
 package com.morais.cleanarch.entrypoint.controller;
 
 import com.morais.cleanarch.core.domain.Customer;
-import com.morais.cleanarch.core.usecase.customer.FindCustomerByIdUseCase;
+import com.morais.cleanarch.core.usecase.customer.FindCustomerByEmailUseCase;
 import com.morais.cleanarch.core.usecase.customer.InsertCustomerUseCase;
 import com.morais.cleanarch.core.usecase.customer.UpdateCustomerUseCase;
+import com.morais.cleanarch.dataprovider.customer.repository.entity.CustomerEntity;
 import com.morais.cleanarch.entrypoint.controller.mapper.CustomerMapper;
 import com.morais.cleanarch.entrypoint.controller.request.CustomerRequest;
+import com.morais.cleanarch.entrypoint.controller.request.LoginRequest;
 import com.morais.cleanarch.entrypoint.controller.response.CustomerResponse;
+import com.morais.cleanarch.entrypoint.controller.response.LoginResponse;
+import com.morais.cleanarch.service.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/customers")
@@ -22,7 +30,7 @@ public class CustomerController {
     private InsertCustomerUseCase insertCustomerUseCase;
 
     @Autowired
-    private FindCustomerByIdUseCase findCustomerByIdUseCase;
+    private FindCustomerByEmailUseCase findCustomerByEmailUseCase;
 
     @Autowired
     private UpdateCustomerUseCase updateCustomerUseCase;
@@ -32,6 +40,13 @@ public class CustomerController {
 
     @Autowired
     private CustomerMapper customerMapper;
+
+    @Autowired
+    private AuthenticationManager authenticationManager;
+
+    @Autowired
+    private TokenService tokenService;
+
     @PostMapping
     public ResponseEntity<Void> insert(@Valid @RequestBody CustomerRequest customerRequest) {
         Customer customer = customerMapper.toCustomer(customerRequest);
@@ -40,13 +55,21 @@ public class CustomerController {
         return ResponseEntity.ok().build();
     }
 
+    @PostMapping("/login")
+    public ResponseEntity<LoginResponse> validarSenha(@RequestBody LoginRequest loginRequest) {
 
-    @GetMapping("/{id}")
-    public ResponseEntity<CustomerResponse> findById(@PathVariable final String id) {
-        var customer = findCustomerByIdUseCase.find(id);
-        var customerResponse = customerMapper.toCustomerResponse(customer);
-        return ResponseEntity.ok().body(customerResponse);
+        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword());
+
+        Authentication authenticaticate =  this.authenticationManager.authenticate(usernamePasswordAuthenticationToken);
+
+        var customerEntity  =  (CustomerEntity) authenticaticate.getPrincipal();
+        LoginResponse loginResponse = new LoginResponse();
+            loginResponse.setToken(tokenService.generateToken(customerEntity));
+        return ResponseEntity.ok().body(loginResponse);
+
+
     }
+
 
 
     @PutMapping("/{id}")

@@ -2,9 +2,14 @@ package com.morais.cleanarch.dataprovider.customer.repository.entity;
 
 import com.morais.cleanarch.dataprovider.address.repository.entity.AddressEntity;
 import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
+import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Table(name = "tbl_customers")
@@ -14,7 +19,7 @@ import javax.validation.constraints.Email;
 @NoArgsConstructor
 @EqualsAndHashCode
 @ToString
-public class CustomerEntity {
+public class CustomerEntity implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,7 +36,7 @@ public class CustomerEntity {
     private String  email;
 
     @Column(name = "password")
-    private String  password;
+    private String  userPassword;
 
     @Column(name = "rg")
     private String rg;
@@ -120,4 +125,41 @@ public class CustomerEntity {
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "address_id", referencedColumnName = "id", nullable = false)
     private AddressEntity address;
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+    }
+
+    @Override
+    public String getPassword() {
+        return userPassword;
+    }
+
+    @Override
+    public String getUsername() {
+        return email;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+
+
 }

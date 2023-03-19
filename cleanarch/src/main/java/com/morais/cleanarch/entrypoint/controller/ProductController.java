@@ -42,6 +42,8 @@ public class ProductController {
         return ResponseEntity.ok().build();
     }
 
+
+
     @GetMapping("/{id}")
     public ResponseEntity<ProductResponse> findById(@PathVariable final String id) {
         var product = findProductByIdUseCase.find(id);
